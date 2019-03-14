@@ -20,7 +20,7 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
         + "id integer primary key autoincrement, "
         + "uuid text, "
         + "type integer, "
-        + "category, "
+        + "category text, "
         + "remark text, "
         + "amount double, "
         + "time integer, "

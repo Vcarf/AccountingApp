@@ -49,16 +49,16 @@ public class AddRecordActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.keyboard_nine).setOnClickListener(this);
         findViewById(R.id.keyboard_zero).setOnClickListener(this);
 
-        getSupportActionBar().setElevation(0);
+        //getSupportActionBar().setElevation(0);
 
         amountText = (TextView) findViewById(R.id.textView_amount);
         editText = (EditText) findViewById(R.id.editText);
         editText.setText(remark);
 
-        handleBackspace();
-        handleDone();
         handleDot();
         handleTypeChange();
+        handleBackspace();
+        handleDone();
 
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new CategoryRecyclerAdapter(this);

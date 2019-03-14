@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         pagerAdapter.notifyDataSetChanged();
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOnPageChangeListener(this);
+        viewPager.addOnPageChangeListener(this);
         viewPager.setCurrentItem(pagerAdapter.getLatsIndex());
 
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {

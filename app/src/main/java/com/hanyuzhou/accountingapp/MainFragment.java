@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
+@SuppressLint("ValidFragment")
 public class MainFragment extends Fragment implements AdapterView.OnItemLongClickListener{
 
     private View rootView;
