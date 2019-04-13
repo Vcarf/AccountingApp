@@ -4,7 +4,7 @@
     android:id="@+id/activity_add_record"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRecordActivity">
+    tools:context="com.helin.accountingapp.AddRecordActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -143,7 +143,7 @@
 
                 <ImageButton
                     android:id="@+id/keyboard_type"
-                    android:src="@drawable/baseline_money_off_24"
+                    android:src="@drawable/ic_cost"
                     android:background="@android:color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,7 +180,8 @@
             android:gravity="center"
             android:text="0.00"
             android:layout_width="match_parent"
-            android:layout_height="80dp" />
+            android:layout_height="80dp"
+            android:inputType="number"/>
 
         <EditText
             android:id="@+id/editText"

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hanyuzhou.accountingapp">
+    package="com.helin.accountingapp">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:allowBackup="true"
@@ -9,18 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
-        <activity android:name=".AddRecordActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+        <activity
+            android:name=".AddRecordActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".mpChart.MPChartActivity" />
+        <activity android:name=".securityauth.ModifyGestureActivity" />
+        <activity android:name=".set.SetMainActivity" />
+        <activity android:name=".set.ModifyGestureActivity1" />
+        <activity android:name=".search.SearchActivity" />
+        <activity android:name=".search.DateSelectActivity"
+            android:label="每日账单"/>
     </application>
 
 </manifest>

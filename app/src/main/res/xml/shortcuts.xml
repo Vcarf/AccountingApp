@@ -10,7 +10,7 @@
 
         <intent
             android:action="com.hanyuzhou.accountingapp.ADD_NEW_RECORD"
-            android:targetClass="com.hanyuzhou.accountingapp.AddRecordActivity"
+            android:targetClass="com.helin.accountingapp.AddRecordActivity"
             android:targetPackage="com.hanyuzhou.accountingapp" />
 
         <categories android:name="android.shortcut.conversation"/>

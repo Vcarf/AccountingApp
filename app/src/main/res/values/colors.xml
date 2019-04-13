@@ -8,4 +8,12 @@
     <color name="colorSecondary_text">#757575</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
+
+    <color name="date_picker_text_light">#5aa67f</color>
+    <color name="date_picker_text_dark">#333</color>
+    <color name="date_picker_bg">#FFFFFF</color>
+    <color name="date_picker_divider">#11112233</color>
+
+
+
 </resources>

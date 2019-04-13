@@ -1,19 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true">
+
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
-        app:elevation="0dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_my"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/my_set" />
+
+            <TextView
+                android:id="@+id/tv_my"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/iv_my"
+                android:gravity="center"
+                android:text="我的"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/btn_statistic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
+
+                android:layout_toRightOf="@id/iv_my"
+                android:src="@drawable/ic_statistic" />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="220dp"
+                android:layout_toRightOf="@id/tv_my"
+                android:src="@drawable/ic_search" />
+
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,50 +68,53 @@
                 android:layout_height="80dp">
 
                 <com.robinhood.ticker.TickerView
-                    android:paddingTop="10dp"
-                    android:layout_centerHorizontal="true"
                     android:id="@+id/amount_text"
-                    android:textSize="60dp"
-                    android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="40dp" />
 
                 <TextView
-                    android:textColor="@android:color/white"
-                    android:textSize="60dp"
+                    android:id="@+id/currency_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/amount_text"
                     android:layout_toEndOf="@+id/amount_text"
                     android:layout_toRightOf="@+id/amount_text"
-                    android:layout_alignTop="@+id/amount_text"
-                    android:id="@+id/currency_text"
                     android:text="￥"
+                    android:textColor="@android:color/white"
+                    android:textSize="40dp" />
+
+                <TextView
+                    android:id="@+id/date_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="13dp"
+                    android:text="JUNE 22"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
-            
-            <TextView
-                android:id="@+id/date_text"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/amount_layout"
-                android:text="JUNE 22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"/>
+
 
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main"/>
+    <include layout="@layout/content_main"
+        android:id="@+id/fragment"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:src="@drawable/baseline_add_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|end"
-        android:layout_margin="16dp"/>
+        app:srcCompat="@drawable/baseline_add_24" />
 
 </android.support.design.widget.CoordinatorLayout>

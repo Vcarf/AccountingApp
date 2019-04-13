@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".search.DateSelectActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@mipmap/img1">
+
+        <LinearLayout
+            android:id="@+id/bg_calender"
+            android:layout_width="wrap_content"
+            android:layout_height="132dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_calender">
+            <!--<TextView-->
+                <!--android:id="@+id/tv_day"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="12"-->
+                <!--android:textSize="30dp"-->
+                <!--android:textColor="#25528c"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:layout_marginLeft="40dp"/>-->
+            <TextView
+                android:id="@+id/tv_year_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-04-12"
+                android:textSize="25sp"
+                android:textColor="#1911ba"
+                android:layout_marginTop="70dp"
+                android:layout_marginLeft="15dp"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/tv_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:text="总收入" />
+
+        <TextView
+            android:id="@+id/tv_income_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_income"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="10dp"
+            android:text="0.00" />
+
+        <TextView
+            android:id="@+id/tv_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="总支出" />
+
+        <TextView
+            android:id="@+id/tv_cost_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cost"
+            android:layout_alignStart="@+id/tv_cost"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:text="0.00" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="3"
+        android:layout_gravity="center">
+
+        <ListView
+            android:id="@+id/lv_current_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/norecord_icon"
+            android:backgroundTint="#00ffffff"
+            >
+
+        </ListView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

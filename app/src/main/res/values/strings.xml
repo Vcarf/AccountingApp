@@ -3,4 +3,13 @@
     <string name="add_new_record">记一笔</string>
     <string name="add_new_record_short">记一笔</string>
     <string name="shortcut_disable_msg">暂不可用</string>
+
+    <string name="cancel">取消</string>
+    <string name="title">请选择时间</string>
+    <string name="confirm">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
 </resources>
