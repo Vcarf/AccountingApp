@@ -1,5 +1,6 @@
 package com.helin.accountingapp.search;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -36,7 +37,19 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         mTvCancel=findViewById(R.id.cancel);
         mLvDetails=findViewById(R.id.lv_detail);
         mIvCleanEdittext=findViewById(R.id.clean_edittext);
+        Intent intent=getIntent();
+        String data=intent.getStringExtra("category");
+
         mListViewAdapter=new ListViewAdapter(SearchActivity.this,true);
+        if(data!=null){
+            LinkedList<RecordBean> infos = GlobalUtil.getInstance().databaseHelper.getInfoByKeyword(data);
+            for(RecordBean bean:infos){
+                System.out.println(bean.getRemark()+bean.getAmount()+bean.getDate());
+            }
+            mListViewAdapter.setData(infos);
+            mLvDetails.setAdapter(mListViewAdapter);
+            return;
+        }
         mEtText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -64,5 +77,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 mEtText.setText(null);
                 break;
         }
+    }
+
+    public void initView(String text){
+
     }
 }

@@ -12,4 +12,6 @@
     <string name="day">日</string>
     <string name="hour">时</string>
     <string name="minute">分</string>
+
+    <string name="dash">-</string>
 </resources>

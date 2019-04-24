@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,10 +25,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private MainViewPagerAdapter pagerAdapter;
     private TickerView amountText;
     private TextView dateText;
-    private ImageView mBtnStatistic,mIvSearch;
+    private ImageView mBtnStatistic, mIvSearch;
     private ImageView mIvMy;
     private TextView mTvMy;
     private RelativeLayout mRlDate;
+
 
     private int currentPagerPosition = 0;
 
@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         dateText = findViewById(R.id.date_text);
 
         mBtnStatistic = findViewById(R.id.btn_statistic);
-        mIvSearch=findViewById(R.id.iv_search);
+        mIvSearch = findViewById(R.id.iv_search);
         mIvMy = findViewById(R.id.iv_my);
         mTvMy = findViewById(R.id.tv_my);
-        mRlDate=findViewById(R.id.amount_layout);
+        mRlDate = findViewById(R.id.amount_layout);
         mBtnStatistic.setOnClickListener(this);
         mIvSearch.setOnClickListener(this);
         mIvMy.setOnClickListener(this);
@@ -117,12 +117,18 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 intent = new Intent(MainActivity.this, MPChartActivity.class);
                 break;
             case R.id.iv_search:
-                intent=new Intent(MainActivity.this,SearchActivity.class);
+                intent = new Intent(MainActivity.this, SearchActivity.class);
                 break;
             case R.id.amount_layout:
-                intent=new Intent(MainActivity.this,DateSelectActivity.class);
+                intent = new Intent(MainActivity.this, DateSelectActivity.class);
                 break;
         }
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println(" protected void onStart() {");
     }
 }

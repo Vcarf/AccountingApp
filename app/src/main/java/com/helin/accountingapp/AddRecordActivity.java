@@ -190,7 +190,7 @@ public class AddRecordActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void onClikc(String category) {
+    public void onClick(String category) {
         this.category = category;
         editText.setText(category);
     }

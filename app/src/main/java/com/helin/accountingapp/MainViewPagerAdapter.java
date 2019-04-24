@@ -22,6 +22,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
         if (!dates.contains(DateUtil.getFormattedDate())){
             dates.addLast(DateUtil.getFormattedDate());
+
         }
 
         for (String date:dates){

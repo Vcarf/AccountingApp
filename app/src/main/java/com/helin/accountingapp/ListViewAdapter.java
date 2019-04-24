@@ -11,12 +11,13 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class ListViewAdapter extends BaseAdapter  {
 
     private LinkedList<RecordBean> records = new LinkedList<>();
-
     private LayoutInflater mInflater;
     private Context mContext;
     public static boolean mIsShowDate;
@@ -36,6 +37,8 @@ public class ListViewAdapter extends BaseAdapter  {
         this.records = records;
         notifyDataSetChanged();
     }
+
+
 
     @Override
     public int getCount() {
@@ -57,15 +60,14 @@ public class ListViewAdapter extends BaseAdapter  {
         ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.cell_list_view, null);
-
             RecordBean recordBean = (RecordBean) getItem(position);
             holder = new ViewHolder(convertView, recordBean);
 
-            convertView.setTag(holder);
-
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            RecordBean recordBean = (RecordBean) getItem(position);
+            holder = new ViewHolder(convertView,recordBean);
         }
+        convertView.setTag(holder);
         return convertView;
     }
 

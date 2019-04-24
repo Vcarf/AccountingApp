@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.HashMap;
+import com.helin.accountingapp.mpChart.StatisticBean;
+
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -57,6 +58,7 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
         db.insert(DB_NAME, null, values);
         values.clear();
         Log.d(TAG, bean.getUuid() + "added");
+        db.close();
     }
 
     public void removeRecord(String uuid) {
@@ -74,6 +76,65 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
         LinkedList<RecordBean> records = new LinkedList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select DISTINCT * from Record where date = ? order by time asc", new String[]{dateStr});
+        records = iteor(cursor, records);
+        db.close();
+        return records;
+    }
+
+    public LinkedList<String> getAvaliableDate() {
+
+        LinkedList<String> dates = new LinkedList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select DISTINCT * from Record order by date asc ", new String[]{});
+        if (cursor.moveToFirst()) {
+            do {
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                if (!dates.contains(date)) {
+                    dates.add(date);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return dates;
+    }
+
+    public LinkedList<StatisticBean> getStatisticOfExpensiveOrIncome(int type, String date) {
+        LinkedList<StatisticBean> totals = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String curDate = DateUtil.getFormattedDate();
+        curDate = curDate.substring(0, 7);
+        System.out.println(curDate);
+        Cursor cursor = db.rawQuery("select category,sum(amount) as sumExpensive from Record where date like '" + curDate + "%' and type=" + type + " group by category", new String[]{});
+        if (cursor.moveToFirst()) {
+            do {
+                String category = cursor.getString(cursor.getColumnIndex("category"));
+                Integer sumExpensive = cursor.getInt(cursor.getColumnIndex("sumExpensive"));
+                StatisticBean total = new StatisticBean();
+                total.setCategory(category);
+                total.setAmount(sumExpensive);
+                total.setType(type);
+                totals.add(total);
+            } while (cursor.moveToNext());
+            cursor.close();
+            db.close();
+            return totals;
+
+        }
+        return null;
+    }
+
+    public LinkedList<RecordBean> getInfoByKeyword(String keyword) {
+        LinkedList<RecordBean> infos = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from Record where remark like'%" + keyword + "%'order by date desc,time desc", new String[]{});
+        infos = iteor(cursor, infos);
+        db.close();
+        return infos;
+    }
+
+    private LinkedList<RecordBean> iteor(Cursor cursor, LinkedList<RecordBean> records) {
         if (cursor.moveToFirst()) {
             do {
                 String uuid = cursor.getString(cursor.getColumnIndex("uuid"));
@@ -99,77 +160,6 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return records;
-    }
-
-    public LinkedList<String> getAvaliableDate() {
-
-        LinkedList<String> dates = new LinkedList<>();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select DISTINCT * from Record order by date asc limit 0,3", new String[]{});
-        if (cursor.moveToFirst()) {
-            do {
-                String date = cursor.getString(cursor.getColumnIndex("date"));
-                if (!dates.contains(date)) {
-                    dates.add(date);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return dates;
-    }
-
-    public Map<String, Integer> getStatisticOfExpensive() {
-        Map<String, Integer> total = new HashMap<String, Integer>();
-        SQLiteDatabase db = this.getWritableDatabase();
-        String curDate = DateUtil.getFormattedDate();
-        curDate = curDate.substring(0, 7);
-        System.out.println(curDate);
-        Cursor cursor = db.rawQuery("select category,sum(amount) as sumExpensive from Record where date like '" + curDate + "%' and type=1 group by category", new String[]{});
-        if (cursor.moveToFirst()) {
-            do {
-                String category = cursor.getString(cursor.getColumnIndex("category"));
-                Integer sumExpensive = cursor.getInt(cursor.getColumnIndex("sumExpensive"));
-                total.put(category, sumExpensive);
-            } while (cursor.moveToNext());
-            cursor.close();
-            return total;
-
-        }
-
-
-        return null;
-    }
-
-    public LinkedList<RecordBean> getInfoByKeyword(String keyword) {
-        LinkedList<RecordBean> infos = new LinkedList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from Record where remark like'%" + keyword + "%'order by date desc,time desc", new String[]{});
-        if (cursor.moveToFirst()) {
-            do {
-                String uuid = cursor.getString(cursor.getColumnIndex("uuid"));
-                int type = cursor.getInt(cursor.getColumnIndex("type"));
-                String category = cursor.getString(cursor.getColumnIndex("category"));
-                String remark = cursor.getString(cursor.getColumnIndex("remark"));
-                double amount = cursor.getDouble(cursor.getColumnIndex("amount"));
-                String date = cursor.getString(cursor.getColumnIndex("date"));
-                long timeStamp = cursor.getLong(cursor.getColumnIndex("time"));
-
-                RecordBean record = new RecordBean();
-                record.setUuid(uuid);
-                record.setType(type);
-                record.setCategory(category);
-                record.setRemark(remark);
-                record.setAmount(amount);
-                record.setDate(date);
-                record.setTimeStamp(timeStamp);
-
-                infos.add(record);
-
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return infos;
     }
 
 }

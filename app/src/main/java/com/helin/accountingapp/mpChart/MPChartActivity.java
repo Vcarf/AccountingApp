@@ -1,11 +1,18 @@
 package com.helin.accountingapp.mpChart;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -13,16 +20,21 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.helin.accountingapp.GlobalUtil;
+import com.helin.accountingapp.ListViewAdapter;
 import com.helin.accountingapp.R;
+import com.helin.accountingapp.search.SearchActivity;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 
-public class MPChartActivity extends AppCompatActivity {
+public class MPChartActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener {
 
     private PieChart mPieChart;
-    private BarChart mBarChart;
-    Map<String, Integer> statisticOfExpensive;
+    private TextView mTvIncome,mTvCost;
+    private ListView mListView;
+    private StatisticListAdapter adapter;
+    LinkedList<StatisticBean> statisticOfExpensive;
 
     public static final int[] PIE_COLORS = {
             Color.rgb(181, 194, 202), Color.rgb(129, 216, 200), Color.rgb(241, 214, 145),
@@ -39,9 +51,14 @@ public class MPChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mpchart);
-        statisticOfExpensive = GlobalUtil.getInstance().databaseHelper.getStatisticOfExpensive();
+        statisticOfExpensive = GlobalUtil.getInstance().databaseHelper.getStatisticOfExpensiveOrIncome(1,null);
         mPieChart = findViewById(R.id.chart_pie);
-        mBarChart = findViewById(R.id.chart_bar);
+        mTvCost=findViewById(R.id.btn_cost);
+        mTvIncome=findViewById(R.id.btn_income);
+        mListView=findViewById(R.id.mp_listview);
+
+        mTvCost.setOnClickListener(this);
+        mTvIncome.setOnClickListener(this);
         showChart(getPieData());
     }
 
@@ -70,6 +87,11 @@ public class MPChartActivity extends AppCompatActivity {
         //设置动画
         mPieChart.animateXY(1000, 1000);
 
+        adapter=new StatisticListAdapter(MPChartActivity.this);
+        adapter.setData(statisticOfExpensive);
+        mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(this);
+
     }
 
     private PieData getPieData() {
@@ -80,9 +102,9 @@ public class MPChartActivity extends AppCompatActivity {
         }
 
         if (statisticOfExpensive != null) {
-            for ( Map.Entry<String, Integer> se : statisticOfExpensive.entrySet()) {
-                System.err.println(se.getKey() + "::" + se.getValue());
-                pieDatas.add(new PieEntry((float) se.getValue(), se.getKey()));
+            for (StatisticBean total:statisticOfExpensive) {
+                //System.err.println(se.getKey() + "::" + se.getValue());
+                pieDatas.add(new PieEntry((float) total.getAmount(), total.getCategory()));
             }
         }
 
@@ -103,4 +125,32 @@ public class MPChartActivity extends AppCompatActivity {
         return pieData;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.btn_cost:
+                mTvCost.setTextColor(Color.argb(255,212,113,13));
+                mTvIncome.setTextColor(Color.BLACK);
+                statisticOfExpensive = GlobalUtil.getInstance().databaseHelper.getStatisticOfExpensiveOrIncome(1,null);
+                showChart(getPieData());
+                break;
+            case R.id.btn_income:
+                mTvIncome.setTextColor(Color.argb(255,212,113,13));
+                mTvCost.setTextColor(Color.BLACK);
+                statisticOfExpensive = GlobalUtil.getInstance().databaseHelper.getStatisticOfExpensiveOrIncome(2,null);
+                showChart(getPieData());
+                break;
+        }
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        System.out.println("is running ===========");
+        final StatisticBean item=statisticOfExpensive.get(i);
+        Intent intent=new Intent(MPChartActivity.this,SearchActivity.class);
+        intent.putExtra("category",item.getCategory());
+        startActivity(intent);
+
+    }
 }

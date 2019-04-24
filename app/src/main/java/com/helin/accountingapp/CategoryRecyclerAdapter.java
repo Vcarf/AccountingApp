@@ -52,14 +52,14 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryViewHo
         holder.imageView.setImageResource(res.resBlack);
         holder.textView.setText(res.title);
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selected = res.title;
                 notifyDataSetChanged();
 
                 if (onCategoryClickListener!=null){
-                    onCategoryClickListener.onClikc(res.title);
+                    onCategoryClickListener.onClick(res.title);
                 }
 
             }
@@ -92,7 +92,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryViewHo
     }
 
     public interface OnCategoryClickListener{
-        void onClikc(String category);
+        void onClick(String category);
     }
 
 }
